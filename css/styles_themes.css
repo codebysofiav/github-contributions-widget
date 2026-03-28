@@ -1,0 +1,182 @@
+:root,
+
+body[data-theme="Github"] {
+  --bg: #f6f8fa;
+  --widget-bg: rgba(255, 255, 255, 0.92);
+  --widget-border: rgba(208, 215, 222, 0.9);
+  --text: #24292f;
+  --muted: #57606a;
+  --accent: #2da44e;
+  --ring: rgba(36, 41, 47, 0.95);
+  --ring_text: #ffffff;
+  --level-0: #ebedf0;
+  --level-1: #9be9a8;
+  --level-2: #40c463;
+  --level-3: #30a14e;
+  --level-4: #216e39;
+}
+
+body[data-theme="Loto"] {
+  --bg: #8fd8d2;
+  --widget-bg: rgba(112, 73, 100, 0.178);
+  --widget-border: rgba(160, 115, 162, 0.4);
+  --ring: rgba(52, 29, 56, 0.96);
+  --ring_text: #fdf9fb;
+  --text: #f4fff9;
+  --muted: #b3d2cb;
+  --accent: #6f4f7d;
+  --level-0: #754f86;
+  --level-1: #a36fb9;
+  --level-2: #c9a1e0;
+  --level-3: #e9a8cf;
+  --level-4: #f5bfd9;
+}
+
+
+body[data-theme="tiktok"] {
+  --bg: #9de2df;
+  --widget-bg: rgba(24, 58, 61, 0.295);
+  --widget-border: rgba(188, 241, 228, 0.15);
+  --text: #f4fff8;
+  --muted: #c0d8d0;
+  --accent: #ff78af;
+  --ring: rgba(52, 29, 56, 0.96);
+  --ring_text: #f4fff8;
+  --level-0: #355356;
+  --level-1: #5f887d;
+  --level-2: #79bb92;
+  --level-3: #8fe9a7;
+  --level-4: #6ceaf4;
+}
+
+body[data-theme="cream"] {
+  --bg: #ffffff;
+  --widget-bg: rgba(253, 255, 252, 0.88);
+  --widget-border: rgba(186, 201, 191, 0.75);
+  --text: #5d6f69;
+  --muted: #8ca29a;
+  --accent: #d88b63;
+  --ring: rgb(47, 70, 66);
+  --ring_text: #ffffff;
+  --level-0: #edf1eb;
+  --level-1: #cfe4db;
+  --level-2: #a9cdc6;
+  --level-3: #78a9b4;
+  --level-4: #3f9f89;
+}
+
+body[data-theme="lavander"] {
+  --bg: #8fd8d2;
+  --widget-bg: rgba(37, 16, 38, 0.99);
+  --widget-border: rgba(160, 115, 162, 0.4);
+  --text: #f4fff9;
+  --muted: #b3d2cb;
+  --accent: #6f4f7d;
+  --ring: rgba(52, 29, 56, 0.96);
+  --ring_text: #fdf9fb;
+  --level-0: #754f86;
+  --level-1: #a36fb9;
+  --level-2: #c9a1e0;
+  --level-3: #e9a8cf;
+  --level-4: #f5bfd9;
+}
+
+body[data-theme="Vintage"] {
+  --bg: #dcefe4;
+  --widget-bg: rgba(255, 251, 244, 0.9);
+  --widget-border: rgba(196, 207, 196, 0.7);
+  --text: #65756c;
+  --muted: #96a79f;
+  --accent: #cf8a62;
+  --ring: rgba(52, 29, 56, 0.96);
+  --ring_text: #fdf9fb;
+  --level-0: #f2f3ee;
+  --level-1: #d9e9e1;
+  --level-2: #bdd9d3;
+  --level-3: #8db9c2;
+  --level-4: #4ba590;
+}
+
+
+body[data-theme="Sakura"] {
+  --bg: #f9e7f0;
+  --widget-bg: rgba(255, 245, 250, 0.88);
+  --widget-border: rgba(240, 200, 220, 0.6);
+  --text: #6f4f5e;
+  --muted: #a88997;
+  --accent: #f48fb1;
+  --ring: rgba(83, 48, 64, 0.95);
+  --ring_text: #fff7fb;
+  --level-0: #f6eef2;
+  --level-1: #f5c6d7;
+  --level-2: #f3a6c5;
+  --level-3: #ea84b2;
+  --level-4: #d85f97;
+}
+
+body[data-theme="Matcha"] {
+  --bg: #eaf4ee;
+  --widget-bg: rgba(245, 252, 247, 0.9);
+  --widget-border: rgba(189, 215, 198, 0.6);
+  --text: #4f6b5c;
+  --muted: #7f9c8c;
+  --accent: #79b89a;
+  --ring: rgba(47, 75, 63, 0.95);
+  --ring_text: #f7fffb;
+  --level-0: #edf4f1;
+  --level-1: #cde5d8;
+  --level-2: #a9d4c3;
+  --level-3: #79b89a;
+  --level-4: #3e9273;
+}
+
+body[data-theme="Midnight"] {
+  --bg: #0f172a;
+  --widget-bg: rgba(30, 41, 59, 0.85);
+  --widget-border: rgba(100, 116, 139, 0.35);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #6366f1;
+  --ring: rgba(15, 23, 42, 0.95);
+  --ring_text: #f8fafc;
+  --level-0: #1e293b;
+  --level-1: #334155;
+  --level-2: #475569;
+  --level-3: #6366f1;
+  --level-4: #8b5cf6;
+}
+
+body[data-theme="Peach"] {
+  --bg: #fff0e8;
+  --widget-bg: rgba(255, 248, 243, 0.9);
+  --widget-border: rgba(255, 210, 190, 0.6);
+  --text: #7a5a4e;
+  --muted: #b09084;
+  --accent: #ff9e80;
+  --ring: rgba(89, 55, 48, 0.95);
+  --ring_text: #fffaf8;
+  --level-0: #fdf1ec;
+  --level-1: #ffd6c9;
+  --level-2: #ffb8a6;
+  --level-3: #ff9e80;
+  --level-4: #f57c64;
+}
+
+body[data-theme="Soft Lavender"] {
+  --bg: #f1ecfa;
+  --widget-bg: rgba(250, 247, 255, 0.9);
+  --widget-border: rgba(210, 200, 235, 0.6);
+  --text: #645a7a;
+  --muted: #9a92b0;
+  --accent: #b69df2;
+  --ring: rgba(61, 52, 89, 0.95);
+  --ring_text: #fbfaff;
+  --level-0: #f2eff9;
+  --level-1: #dcd3f4;
+  --level-2: #c3b3ef;
+  --level-3: #a78be5;
+  --level-4: #8b6bd9;
+}
+
+
+

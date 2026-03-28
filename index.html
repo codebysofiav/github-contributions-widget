@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Widget</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles_themes.css">
+</head>
+<body>
+  <main class="widget">
+    <div class="widget-header">
+      <div class="profile">
+        <img src="img/avatar.jpg" alt="Avatar de GitHub" class="profile-image profile-avatar">
+        <div class="profile-copy">
+          <h1 id="profile-name">codebysofiav</h1>
+          <small id="connection-status" class="connection-status">Not connected</small>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span class="tag">last 3 months</span>
+        <div class="window-controls">
+          <button id="window-minimize" class="window-control-button" type="button" aria-label="Minimizar">-</button>
+          <button id="window-close" class="window-control-button window-control-button--close" type="button" aria-label="Cerrar">X</button>
+        </div>
+        <div class="menu-wrapper">
+          <button id="theme-toggle" class="theme-button" type="button" aria-label="Abrir menu" aria-expanded="false">&#8942;</button>
+          <div id="widget-menu" class="widget-menu" hidden>
+            <button id="menu-login" class="menu-item" type="button">Login</button>
+            <button id="menu-logout" class="menu-item" type="button">Logout</button>
+            <button id="menu-refresh" class="menu-item" type="button">Refresh</button>
+            <div class="theme-parent">
+              <button class="menu-item theme-parent-toggle" type="button">Size ></button>
+              <div class="theme-submenu">
+                <button class="size-option" type="button" data-size="small">Small</button>
+                <button class="size-option" type="button" data-size="medium">Medium</button>
+                <button class="size-option" type="button" data-size="large">Large</button>
+              </div>
+            </div>
+            <div class="theme-parent">
+              <button class="menu-item theme-parent-toggle" type="button">Theme ></button>
+              <div class="theme-submenu">
+                <button class="theme-option" type="button" data-theme="Github">Github</button>
+                <button class="theme-option" type="button" data-theme="tiktok">tiktok</button>
+                <button class="theme-option" type="button" data-theme="cream">cream</button>
+                <button class="theme-option" type="button" data-theme="lavander">lavander</button>
+                <button class="theme-option" type="button" data-theme="Loto">loto</button>
+                <button class="theme-option" type="button" data-theme="Matcha">matcha</button>
+                <button class="theme-option" type="button" data-theme="Midnight">midnight</button>
+                <button class="theme-option" type="button" data-theme="Peach">peach</button>
+                <button class="theme-option" type="button" data-theme="Soft Lavender">soft lavender</button>
+                <button class="theme-option" type="button" data-theme="Vintage">vintage</button>
+                <button class="theme-option" type="button" data-theme="Sakura">sakura</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="months" id="months"></div>
+
+    <section class="content">
+      <div class="grid" id="contribution-grid"></div>
+
+      <aside class="summary-card">
+        <div class="ring" id="contribution-ring">
+          <div class="ring-inner">
+            <span id="total-count">0</span>
+            <small>Contributions</small>
+          </div>
+        </div>
+        <div class="legend">
+          <span>less</span>
+          <div class="legend-colors">
+            <i class="level-0"></i>
+            <i class="level-1"></i>
+            <i class="level-2"></i>
+            <i class="level-3"></i>
+            <i class="level-4"></i>
+          </div>
+          <span>more</span>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div id="login-modal" class="modal-login" hidden>
+    <div class="modal-login__backdrop" data-close-modal="true"></div>
+    <div class="modal-login__panel" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+      <button id="login-modal-close" class="modal-login__close" type="button" aria-label="Cerrar modal">&times;</button>
+      <h2 id="login-modal-title">Connect GitHub</h2>
+      <p class="modal-login__hint">El token solo se usa para consultar la API de GitHub desde este widget.</p>
+      <label class="modal-login__field" for="github-username">
+        <span>GitHub username</span>
+        <input id="github-username" class="menu-input" type="text" autocomplete="username" placeholder="octocat">
+      </label>
+      <label class="modal-login__field" for="github-token">
+        <span>Personal access token</span>
+        <input id="github-token" class="menu-input" type="password" autocomplete="current-password" placeholder="ghp_...">
+      </label>
+      <p id="login-error" class="modal-login__error" hidden></p>
+      <button id="login-connect" class="menu-item modal-login__submit" type="button">Connect</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

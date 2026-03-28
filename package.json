@@ -1,0 +1,12 @@
+{
+  "name": "github-widget",
+  "version": "1.0.0",
+  "description": "Widget local de GitHub empaquetado con Electron.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^41.1.0"
+  }
+}

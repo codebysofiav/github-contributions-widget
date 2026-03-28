@@ -1,0 +1,9 @@
+.env
+node_modules/
+dist/
+build/
+out/
+release/
+*.log
+Thumbs.db
+Desktop.ini
