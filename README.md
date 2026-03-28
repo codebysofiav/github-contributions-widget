@@ -70,13 +70,3 @@ Se recomienda:
 - `img/`: imagenes del widget
 - `assets/icono.ico`: icono de la app
 
-## Archivos legacy o de apoyo
-
-Estos archivos ya no son necesarios para el flujo principal actual, pero quedaron como referencia:
-
-- `data.json`
-- `fetch_github_data.py`
-- `otros/fetch-github-data.mjs`
-- `.env`
-
-La app actual no depende de `data.json`; ahora consulta GitHub directamente desde el widget.
