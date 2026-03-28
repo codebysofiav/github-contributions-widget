@@ -43,6 +43,18 @@ app.whenReady().then(() => {
   });
 });
 
+ipcMain.on("resize-window", (event, size) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+
+  if (win) {
+    win.setContentSize(size.width, size.height);
+  }
+
+  if (size === "login-error") {
+    win.setSize(width, height + 60);
+  }
+});
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
