@@ -2,6 +2,11 @@
 
 Widget local de escritorio hecho con Electron para visualizar contribuciones de GitHub, cambiar tema, ajustar tamano del widget y guardar la sesion local del usuario.
 
+## Preview
+<p align="center">
+  <img src="img/prueba.png" width="600">
+</p>
+
 ## Caracteristicas
 
 - Login local con `GitHub username` y `Personal access token`
