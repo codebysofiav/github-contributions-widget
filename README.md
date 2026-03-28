@@ -39,6 +39,28 @@ npm install
 npm start
 ```
 
+## Empaquetar para Windows
+
+1. Instala dependencias:
+
+```bash
+npm install
+```
+
+2. Genera una version empaquetada sin instalador:
+
+```bash
+npm run pack
+```
+
+3. Genera el instalador para Windows:
+
+```bash
+npm run dist
+```
+
+Los archivos generados quedaran en la carpeta `release/`.
+
 ## Como funciona el login
 
 La app guarda estos datos en `localStorage` del entorno local de Electron:
@@ -70,3 +92,34 @@ Se recomienda:
 - `img/`: imagenes del widget
 - `assets/icono.ico`: icono de la app
 
+## Archivos legacy o de apoyo
+
+Estos archivos ya no son necesarios para el flujo principal actual, pero quedaron como referencia:
+
+- `data.json`
+- `fetch_github_data.py`
+- `otros/fetch-github-data.mjs`
+- `.env`
+
+La app actual no depende de `data.json`; ahora consulta GitHub directamente desde el widget.
+
+## Que subir a GitHub
+
+Sube el codigo fuente del proyecto:
+
+- `index.html`
+- `script.js`
+- `main.js`
+- `preload.js`
+- `package.json`
+- `package-lock.json`
+- `README.md`
+- `css/`
+- `img/`
+- `assets/`
+
+No subas:
+
+- `node_modules/`
+- `.env`
+- builds generados o ejecutables temporales

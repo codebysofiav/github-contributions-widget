@@ -33,33 +33,6 @@ ipcMain.on("window-close", (event) => {
   BrowserWindow.fromWebContents(event.sender)?.close();
 });
 
-ipcMain.on("resize-window", (event, size) => {
-  const win = BrowserWindow.fromWebContents(event.sender);
-
-  if (win) {
-    win.setContentSize(size.width, size.height);
-  }
-
-  if (size === "login-error") {
-    win.setSize(width, height + 60);
-  }
-});
-
-/*ipcMain.on("resize-window", (event, size) => {
-  const win = BrowserWindow.fromWebContents(event.sender);
-  if (!win) return;
-
-  const [width, height] = win.getSize();
-
-  if (size === "login-error") {
-    win.setSize(width, height + 60);
-  }
-
-  if (size === "login-normal") {
-    win.setSize(width, 400);
-  }
-});*/
-
 app.whenReady().then(() => {
   createWindow();
 

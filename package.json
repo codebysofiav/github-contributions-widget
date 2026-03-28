@@ -2,11 +2,50 @@
   "name": "github-widget",
   "version": "1.0.0",
   "description": "Widget local de GitHub empaquetado con Electron.",
+  "author": "Sofia",
+  "license": "MIT",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "devDependencies": {
-    "electron": "^41.1.0"
+    "electron": "^41.1.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.sofia.githubwidget",
+    "productName": "GitHub Widget",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "assets/**/*",
+      "css/**/*",
+      "img/**/*",
+      "index.html",
+      "main.js",
+      "package.json",
+      "preload.js",
+      "script.js"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icono.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
   }
 }
