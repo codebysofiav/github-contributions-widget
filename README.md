@@ -25,6 +25,12 @@ Widget local de escritorio hecho con Electron para visualizar contribuciones de 
 - JavaScript
 - Electron
 
+## Configuración
+Para usar el widget se necesita:
+- Github username
+- Github personal access token
+Se puede generar el token aqui: https://github.com/settings/tokens
+
 ## Ejecutar en local
 
 1. Instala dependencias:
@@ -72,16 +78,6 @@ La app guarda estos datos en `localStorage` del entorno local de Electron:
 
 Cuando la app vuelve a abrirse, reutiliza `github_user` y `github_token` para conectarse automaticamente.
 
-## Nota de seguridad
-
-Este proyecto esta pensado para uso local. El token se guarda localmente en `localStorage`, por lo que no es la mejor opcion para una app web publica. Para uso personal/local es una solucion practica.
-
-Se recomienda:
-
-- usar un token con permisos minimos
-- no compartir el token
-- no subir `.env` ni datos sensibles al repositorio
-
 ## Estructura principal
 
 - `index.html`: estructura del widget
@@ -92,3 +88,21 @@ Se recomienda:
 - `img/`: imagenes del widget
 - `assets/icono.ico`: icono de la app
 
+## Themes
+El widget soporta multiples temas, algunos de ellos son:
+ - Github
+ - Cream
+ - Lavander
+ - Matcha
+
+ Más temas pueden ser añadidos facilmente en `styles_themes.css`.
+
+ <p align="center">
+  <img src="img/theme1.png.png" width="45%">
+  <img src="img/theme2.png.png" width="45%">
+</p>
+
+<p align="center">
+  <img src="img/theme3.png.png" width="45%">
+  <img src="img/theme4.png.png" width="45%">
+</p>
