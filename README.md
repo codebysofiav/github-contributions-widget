@@ -4,8 +4,8 @@ Widget local de escritorio hecho con Electron para visualizar contribuciones de 
 
 ## Preview
 <p align="center">
-  <img src="img/prueba.png" width="45%">
-  <img src="img/vertica2.png" width="45%" height="200">
+  <img src="img/prueba.png" width="35%">
+  <img src="img/vertica2.png" width="35%">
 </p>
 
 ## Caracteristicas
