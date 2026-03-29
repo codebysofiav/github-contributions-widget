@@ -5,7 +5,7 @@ Widget local de escritorio hecho con Electron para visualizar contribuciones de 
 ## Preview
 <p align="center">
   <img src="img/prueba.png" width="45%">
-  <img src="img/vertical.png" width="45%">
+  <img src="img/vertica2.png" width="30%">
 </p>
 
 ## Caracteristicas
@@ -15,6 +15,7 @@ Widget local de escritorio hecho con Electron para visualizar contribuciones de 
 - Carga de perfil y contribuciones desde la API de GitHub
 - Avatar dinamico en el header
 - Logout desde el menu
+- Cambio de orientación: horizontal o vertical
 - Cambio de tema
 - Cambio de tamano del widget
 - Ventana tipo widget movible, minimizable y cerrable
