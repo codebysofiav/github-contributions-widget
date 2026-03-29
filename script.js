@@ -9,10 +9,13 @@ const menuLogout = document.getElementById("menu-logout");
 const menuRefresh = document.getElementById("menu-refresh");
 const themeOptions = document.querySelectorAll(".theme-option");
 const sizeOptions = document.querySelectorAll(".size-option");
+const themeParents = document.querySelectorAll(".theme-parent");
+const themeParentToggles = document.querySelectorAll(".theme-parent-toggle");
 const profileName = document.getElementById("profile-name");
 const connectionStatus = document.getElementById("connection-status");
 const profileAvatar = document.querySelector(".profile-avatar");
 const loginModal = document.getElementById("login-modal");
+const loginModalPanel = document.querySelector(".modal-login__panel");
 const loginModalClose = document.getElementById("login-modal-close");
 const loginConnect = document.getElementById("login-connect");
 const windowMinimize = document.getElementById("window-minimize");
@@ -39,6 +42,7 @@ const DEFAULT_PROFILE = {
 };
 
 let currentLevelCounts = [0, 0, 0, 0, 0];
+let syncWindowSizeTimeout;
 
 function formatDate(date) {
   return date.toLocaleDateString("es-CO", {
@@ -64,13 +68,52 @@ function startOfWeek(date) {
   return normalizedDate;
 }
 
-function ajustarVentana() {
-  if (!window.electronAPI) return;
+function syncWindowSize() {
+  if (!window.electronAPI) {
+    return;
+  }
 
-  window.electronAPI.resizeWindow({
-    width: 780,
-    height: document.body.scrollHeight + 20
-  });
+  window.clearTimeout(syncWindowSizeTimeout);
+
+  syncWindowSizeTimeout = window.setTimeout(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+    const widgetRect = document.querySelector(".widget")?.getBoundingClientRect();
+    const modalRect = !loginModal.hidden
+      ? loginModalPanel?.getBoundingClientRect()
+      : null;
+    const floatingRects = [];
+    const widgetMenuRect = !widgetMenu.hidden ? widgetMenu.getBoundingClientRect() : null;
+    const framePadding = 28;
+
+    if (widgetMenuRect) {
+      floatingRects.push(widgetMenuRect);
+    }
+
+    document.querySelectorAll(".theme-submenu").forEach((submenu) => {
+      const styles = window.getComputedStyle(submenu);
+
+      if (styles.visibility !== "hidden" && styles.opacity !== "0") {
+        floatingRects.push(submenu.getBoundingClientRect());
+      }
+    });
+
+    const allRects = [widgetRect, modalRect, ...floatingRects].filter(Boolean);
+    const minLeft = Math.min(...allRects.map((rect) => rect.left));
+    const minTop = Math.min(...allRects.map((rect) => rect.top));
+    const maxRight = Math.max(...allRects.map((rect) => rect.right));
+    const maxBottom = Math.max(...allRects.map((rect) => rect.bottom));
+
+    const width = (maxRight - minLeft) + (framePadding * 2);
+    const height = (maxBottom - minTop) + (framePadding * 2);
+
+    window.electronAPI.resizeWindow({
+      width: Math.max(width, 620),
+      height: Math.max(height, 300)
+    });
+      });
+    });
+  }, 30);
 }
 
 function endOfWeek(date) {
@@ -230,6 +273,8 @@ function applyWidgetSize(sizeName) {
     option.dataset.active = String(isActive);
     option.setAttribute("aria-pressed", String(isActive));
   });
+
+  syncWindowSize();
 }
 
 function toggleMenu(forceOpen) {
@@ -237,7 +282,43 @@ function toggleMenu(forceOpen) {
   widgetMenu.hidden = !shouldOpen;
   themeToggle.setAttribute("aria-expanded", String(shouldOpen));
 
-  ajustarVentana();
+  if (!shouldOpen) {
+    closeSubmenus();
+  }
+
+  syncWindowSize();
+}
+
+function closeSubmenus(options = {}) {
+  const { skipSync = false } = options;
+
+  themeParents.forEach((parent) => {
+    parent.dataset.open = "false";
+  });
+
+  themeParentToggles.forEach((toggle) => {
+    toggle.setAttribute("aria-expanded", "false");
+  });
+
+  if (!skipSync) {
+    syncWindowSize();
+  }
+}
+
+function toggleSubmenu(toggleButton) {
+  const parent = toggleButton.closest(".theme-parent");
+  const willOpen = parent?.dataset.open !== "true";
+
+  closeSubmenus({ skipSync: true });
+
+  if (!parent || !willOpen) {
+    syncWindowSize();
+    return;
+  }
+
+  parent.dataset.open = "true";
+  toggleButton.setAttribute("aria-expanded", "true");
+  syncWindowSize();
 }
 
 function initWindowControls() {
@@ -262,16 +343,19 @@ function openLoginModal() {
   loginModal.hidden = false;
   document.body.classList.add("modal-open");
   githubUsernameInput.focus();
+  syncWindowSize();
 }
 
 function closeLoginModal() {
   loginModal.hidden = true;
   document.body.classList.remove("modal-open");
+  syncWindowSize();
 }
 
 function showLoginError(message) {
   loginError.textContent = message;
   loginError.hidden = false;
+  syncWindowSize();
 }
 
 function getStoredCredentials() {
@@ -310,6 +394,7 @@ function renderEmptyState() {
   const contributions = createThreeMonthContributions([]);
   renderMonths(contributions);
   renderGrid(contributions);
+  syncWindowSize();
 }
 
 async function fetchGitHubProfile(username, token) {
@@ -426,6 +511,7 @@ function renderGrid(contributions) {
   currentLevelCounts = levelCounts;
   totalCount.textContent = total;
   updateRing(levelCounts);
+  syncWindowSize();
 }
 
 async function refreshWidget(options = {}) {
@@ -498,12 +584,21 @@ function initThemeToggle() {
   themeOptions.forEach((option) => {
     option.addEventListener("click", () => {
       applyTheme(option.dataset.theme);
+      closeSubmenus();
     });
   });
 
   sizeOptions.forEach((option) => {
     option.addEventListener("click", () => {
       applyWidgetSize(option.dataset.size);
+      closeSubmenus();
+    });
+  });
+
+  themeParentToggles.forEach((toggle) => {
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleSubmenu(toggle);
     });
   });
 
@@ -577,6 +672,11 @@ function initThemeToggle() {
   document.addEventListener("click", (event) => {
     if (!widgetMenu.hidden && !event.target.closest(".menu-wrapper")) {
       toggleMenu(false);
+      return;
+    }
+
+    if (!event.target.closest(".theme-parent")) {
+      closeSubmenus();
     }
   });
 

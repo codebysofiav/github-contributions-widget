@@ -354,8 +354,7 @@ body.modal-open {
   pointer-events: none;
 }
 
-.theme-parent:hover .theme-submenu,
-.theme-parent:focus-within .theme-submenu {
+.theme-parent[data-open="true"] .theme-submenu {
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
@@ -627,8 +626,7 @@ body.modal-open {
     transform: translateY(-6px);
   }
 
-  .theme-parent:hover .theme-submenu,
-  .theme-parent:focus-within .theme-submenu {
+  .theme-parent[data-open="true"] .theme-submenu {
     transform: translateY(0);
   }
 

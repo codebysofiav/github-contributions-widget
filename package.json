@@ -11,36 +11,39 @@
     "dist": "electron-builder"
   },
   "devDependencies": {
-    "electron": "^41.1.0",
+    "electron": "^28.3.3",
     "electron-builder": "^26.0.12"
   },
   "build": {
     "appId": "com.sofia.githubwidget",
     "productName": "GitHub Widget",
+
     "directories": {
       "output": "release"
     },
+
+    "asar": true,
+    "compression": "maximum",
+
     "files": [
-      "assets/**/*",
-      "css/**/*",
-      "img/**/*",
       "index.html",
       "main.js",
-      "package.json",
       "preload.js",
-      "script.js"
+      "script.js",
+      "css/**/*",
+      "img/**/*",
+      "assets/**/*"
     ],
+
+    "extraMetadata": {
+      "main": "main.js"
+    },
+
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
+      "target": "nsis",
       "icon": "assets/icono.ico"
     },
+
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
@@ -49,3 +52,4 @@
     }
   }
 }
+
