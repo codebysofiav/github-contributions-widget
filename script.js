@@ -9,6 +9,7 @@ const menuLogout = document.getElementById("menu-logout");
 const menuRefresh = document.getElementById("menu-refresh");
 const themeOptions = document.querySelectorAll(".theme-option");
 const sizeOptions = document.querySelectorAll(".size-option");
+const layoutOptions = document.querySelectorAll(".layout-option");
 const themeParents = document.querySelectorAll(".theme-parent");
 const themeParentToggles = document.querySelectorAll(".theme-parent-toggle");
 const profileName = document.getElementById("profile-name");
@@ -29,13 +30,15 @@ const THEMES = ["Github", "Loto", "tiktok", "cream", "lavander", "Matcha", "Midn
 const STORAGE_KEYS = {
   user: "github_user",
   token: "github_token",
-  widgetSize: "widget_size"
+  widgetSize: "widget_size",
+  widgetLayout: "widget_layout"
 };
 const WIDGET_SIZES = {
   small: 0.8,
   medium: 0.9,
   large: 1
 };
+const WIDGET_LAYOUTS = ["horizontal", "vertical"];
 const DEFAULT_PROFILE = {
   login: "codebysofiav",
   avatarUrl: "img/avatar.jpg"
@@ -270,6 +273,20 @@ function applyWidgetSize(sizeName) {
 
   sizeOptions.forEach((option) => {
     const isActive = option.dataset.size === normalizedSize;
+    option.dataset.active = String(isActive);
+    option.setAttribute("aria-pressed", String(isActive));
+  });
+
+  syncWindowSize();
+}
+
+function applyWidgetLayout(layoutName) {
+  const normalizedLayout = WIDGET_LAYOUTS.includes(layoutName) ? layoutName : "horizontal";
+  document.body.dataset.layout = normalizedLayout;
+  localStorage.setItem(STORAGE_KEYS.widgetLayout, normalizedLayout);
+
+  layoutOptions.forEach((option) => {
+    const isActive = option.dataset.layout === normalizedLayout;
     option.dataset.active = String(isActive);
     option.setAttribute("aria-pressed", String(isActive));
   });
@@ -572,9 +589,11 @@ function initThemeToggle() {
   const savedTheme = localStorage.getItem("theme");
   const initialTheme = THEMES.includes(savedTheme) ? savedTheme : THEMES[0];
   const savedWidgetSize = localStorage.getItem(STORAGE_KEYS.widgetSize);
+  const savedWidgetLayout = localStorage.getItem(STORAGE_KEYS.widgetLayout);
 
   applyTheme(initialTheme);
   applyWidgetSize(savedWidgetSize);
+  applyWidgetLayout(savedWidgetLayout);
 
   themeToggle.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -591,6 +610,13 @@ function initThemeToggle() {
   sizeOptions.forEach((option) => {
     option.addEventListener("click", () => {
       applyWidgetSize(option.dataset.size);
+      closeSubmenus();
+    });
+  });
+
+  layoutOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+      applyWidgetLayout(option.dataset.layout);
       closeSubmenus();
     });
   });

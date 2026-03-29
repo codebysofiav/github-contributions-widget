@@ -309,11 +309,26 @@ body.modal-open {
   text-align: left;
 }
 
+.layout-option {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--widget-border);
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+
 .theme-option:hover {
   background: rgba(255,255,255,0.14);
 }
 
 .size-option:hover {
+  background: rgba(255,255,255,0.14);
+}
+
+.layout-option:hover {
   background: rgba(255,255,255,0.14);
 }
 
@@ -323,6 +338,11 @@ body.modal-open {
 }
 
 .size-option[data-active="true"] {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--accent);
+}
+
+.layout-option[data-active="true"] {
   background: rgba(255, 255, 255, 0.2);
   border-color: var(--accent);
 }
@@ -380,6 +400,55 @@ body.modal-open {
   justify-content: flex-start;
   align-items: center;
   gap: 36px;
+}
+
+body[data-layout="vertical"] .widget {
+  width: min(430px, 100%);
+}
+
+body[data-layout="vertical"] .widget-header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+body[data-layout="vertical"] .profile {
+  width: 100%;
+}
+
+body[data-layout="vertical"] .header-actions {
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 2px;
+}
+
+body[data-layout="vertical"] .tag {
+  margin-right: auto;
+}
+
+body[data-layout="vertical"] .months {
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 12px;
+  margin: 20px 0 15px 12px;
+}
+
+body[data-layout="vertical"] .content {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+}
+
+body[data-layout="vertical"] .summary-card {
+  width: 100%;
+  align-items: center;
+  padding: 0;
+}
+
+body[data-layout="vertical"] .grid {
+  margin: 0 auto;
+  justify-content: center;
+  gap: 6px;
 }
 
 /* GRID CALENDAR */
