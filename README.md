@@ -4,8 +4,8 @@ Widget local de escritorio hecho con Electron para visualizar contribuciones de 
 
 ## Preview
 <p align="center">
-  <img src="img/prueba.png" width="450">
-  <img src="img/vertical.png" width="450">
+  <img src="img/prueba.png" width="45%">
+  <img src="img/vertical.png" width="45%">
 </p>
 
 ## Caracteristicas
@@ -98,12 +98,12 @@ El widget soporta multiples temas, algunos de ellos son:
 
  Más temas pueden ser añadidos facilmente en `styles_themes.css`.
 
- <p align="center">
-  <img src="img/theme1.png.png" width="450">
-  <img src="img/theme2.png.png" width="450">
+<p align="center">
+  <img src="img/theme1.png" width="45%">
+  <img src="img/theme2.png" width="45%">
 </p>
 
 <p align="center">
-  <img src="img/theme3.png.png" width="450">
-  <img src="img/theme4.png.png" width="450">
+  <img src="img/theme3.png" width="45%">
+  <img src="img/theme4.png" width="45%">
 </p>
