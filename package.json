@@ -1,55 +1,17 @@
 {
   "name": "github-widget",
   "version": "1.0.0",
-  "description": "Widget local de GitHub empaquetado con Electron.",
+  "description": "Widget local de GitHub empaquetado con Tauri.",
   "author": "Sofia",
   "license": "MIT",
-  "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dev": "tauri dev",
+    "build": "tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.6.0"
   },
   "devDependencies": {
-    "electron": "^28.3.3",
-    "electron-builder": "^26.0.12"
-  },
-  "build": {
-    "appId": "com.sofia.githubwidget",
-    "productName": "GitHub Widget",
-
-    "directories": {
-      "output": "release"
-    },
-
-    "asar": true,
-    "compression": "maximum",
-
-    "files": [
-      "index.html",
-      "main.js",
-      "preload.js",
-      "script.js",
-      "css/**/*",
-      "img/**/*",
-      "assets/**/*"
-    ],
-
-    "extraMetadata": {
-      "main": "main.js"
-    },
-
-    "win": {
-      "target": "nsis",
-      "icon": "assets/icono.ico"
-    },
-
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
-    }
+    "@tauri-apps/cli": "^1.6.3"
   }
 }
-

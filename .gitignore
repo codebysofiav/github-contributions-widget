@@ -4,6 +4,8 @@ dist/
 build/
 out/
 release/
+dist-tauri/
+src-tauri/target/
 *.log
 Thumbs.db
 Desktop.ini

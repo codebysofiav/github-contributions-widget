@@ -1,6 +1,6 @@
 # GitHub Widget
 
-Widget local de escritorio hecho con Electron para visualizar contribuciones de GitHub, cambiar tema, ajustar tamano del widget y guardar la sesion local del usuario.
+Widget local de escritorio hecho con Tauri para visualizar contribuciones de GitHub, cambiar tema, ajustar tamano del widget y guardar la sesion local del usuario.
 
 ## Preview
 <p align="center">
@@ -25,7 +25,8 @@ Widget local de escritorio hecho con Electron para visualizar contribuciones de 
 - HTML
 - CSS
 - JavaScript
-- Electron
+- Tauri
+- Rust
 
 ## Configuración
 Para usar el widget se necesita:
@@ -44,7 +45,7 @@ npm install
 2. Inicia la app:
 
 ```bash
-npm start
+npx tauri dev
 ```
 
 ## Empaquetar para Windows
@@ -55,23 +56,17 @@ npm start
 npm install
 ```
 
-2. Genera una version empaquetada sin instalador:
+2. Genera el instalador para Windows:
 
 ```bash
-npm run pack
+npx tauri build
 ```
 
-3. Genera el instalador para Windows:
-
-```bash
-npm run dist
-```
-
-Los archivos generados quedaran en la carpeta `release/`.
+Los archivos generados quedaran dentro de `src-tauri/target/release/bundle/`.
 
 ## Como funciona el login
 
-La app guarda estos datos en `localStorage` del entorno local de Electron:
+La app guarda estos datos en `localStorage` del entorno local de Tauri:
 
 - `github_user`
 - `github_token`
@@ -84,8 +79,7 @@ Cuando la app vuelve a abrirse, reutiliza `github_user` y `github_token` para co
 
 - `index.html`: estructura del widget
 - `script.js`: logica del widget, login, menu y carga desde GitHub
-- `main.js`: ventana principal de Electron
-- `preload.js`: puente seguro entre Electron y el frontend
+- `src-tauri/`: capa nativa y configuracion de Tauri
 - `css/`: estilos del widget y temas
 - `img/`: imagenes del widget
 - `assets/icono.ico`: icono de la app

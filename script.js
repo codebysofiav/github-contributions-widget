@@ -47,6 +47,24 @@ const DEFAULT_PROFILE = {
 let currentLevelCounts = [0, 0, 0, 0, 0];
 let syncWindowSizeTimeout;
 
+function getTauriWindowApi() {
+  return window.__TAURI__?.window ?? null;
+}
+
+async function resizeAppWindow(size) {
+  const tauriWindow = getTauriWindowApi();
+  const appWindow = tauriWindow?.appWindow;
+  const LogicalSize = tauriWindow?.LogicalSize;
+
+  if (!appWindow || !LogicalSize) {
+    return;
+  }
+
+  await appWindow.setSize(
+    new LogicalSize(Math.ceil(size.width), Math.ceil(size.height))
+  );
+}
+
 function formatDate(date) {
   return date.toLocaleDateString("es-CO", {
     day: "2-digit",
@@ -72,7 +90,7 @@ function startOfWeek(date) {
 }
 
 function syncWindowSize() {
-  if (!window.electronAPI) {
+  if (!getTauriWindowApi()) {
     return;
   }
 
@@ -81,39 +99,41 @@ function syncWindowSize() {
   syncWindowSizeTimeout = window.setTimeout(() => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-    const widgetRect = document.querySelector(".widget")?.getBoundingClientRect();
-    const modalRect = !loginModal.hidden
-      ? loginModalPanel?.getBoundingClientRect()
-      : null;
-    const floatingRects = [];
-    const widgetMenuRect = !widgetMenu.hidden ? widgetMenu.getBoundingClientRect() : null;
-    const framePadding = 28;
+        const widgetRect = document.querySelector(".widget")?.getBoundingClientRect();
+        const modalRect = !loginModal.hidden
+          ? loginModalPanel?.getBoundingClientRect()
+          : null;
+        const floatingRects = [];
+        const widgetMenuRect = !widgetMenu.hidden ? widgetMenu.getBoundingClientRect() : null;
+        const framePadding = 28;
 
-    if (widgetMenuRect) {
-      floatingRects.push(widgetMenuRect);
-    }
+        if (widgetMenuRect) {
+          floatingRects.push(widgetMenuRect);
+        }
 
-    document.querySelectorAll(".theme-submenu").forEach((submenu) => {
-      const styles = window.getComputedStyle(submenu);
+        document.querySelectorAll(".theme-submenu").forEach((submenu) => {
+          const styles = window.getComputedStyle(submenu);
 
-      if (styles.visibility !== "hidden" && styles.opacity !== "0") {
-        floatingRects.push(submenu.getBoundingClientRect());
-      }
-    });
+          if (styles.visibility !== "hidden" && styles.opacity !== "0") {
+            floatingRects.push(submenu.getBoundingClientRect());
+          }
+        });
 
-    const allRects = [widgetRect, modalRect, ...floatingRects].filter(Boolean);
-    const minLeft = Math.min(...allRects.map((rect) => rect.left));
-    const minTop = Math.min(...allRects.map((rect) => rect.top));
-    const maxRight = Math.max(...allRects.map((rect) => rect.right));
-    const maxBottom = Math.max(...allRects.map((rect) => rect.bottom));
+        const allRects = [widgetRect, modalRect, ...floatingRects].filter(Boolean);
+        const minLeft = Math.min(...allRects.map((rect) => rect.left));
+        const minTop = Math.min(...allRects.map((rect) => rect.top));
+        const maxRight = Math.max(...allRects.map((rect) => rect.right));
+        const maxBottom = Math.max(...allRects.map((rect) => rect.bottom));
 
-    const width = (maxRight - minLeft) + (framePadding * 2);
-    const height = (maxBottom - minTop) + (framePadding * 2);
+        const width = (maxRight - minLeft) + (framePadding * 2);
+        const height = (maxBottom - minTop) + (framePadding * 2);
 
-    window.electronAPI.resizeWindow({
-      width: Math.max(width, 620),
-      height: Math.max(height, 300)
-    });
+        resizeAppWindow({
+          width: Math.max(width, 620),
+          height: Math.max(height, 300)
+        }).catch((error) => {
+          console.error("No se pudo redimensionar la ventana.", error);
+        });
       });
     });
   }, 30);
@@ -339,16 +359,20 @@ function toggleSubmenu(toggleButton) {
 }
 
 function initWindowControls() {
-  if (!window.windowControls) {
-    return;
-  }
-
   windowMinimize?.addEventListener("click", () => {
-    window.windowControls.minimize();
+    const appWindow = getTauriWindowApi()?.appWindow;
+
+    appWindow?.minimize().catch((error) => {
+      console.error("No se pudo minimizar la ventana.", error);
+    });
   });
 
   windowClose?.addEventListener("click", () => {
-    window.windowControls.close();
+    const appWindow = getTauriWindowApi()?.appWindow;
+
+    appWindow?.close().catch((error) => {
+      console.error("No se pudo cerrar la ventana.", error);
+    });
   });
 }
 
