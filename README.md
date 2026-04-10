@@ -1,6 +1,6 @@
 # GitHub Widget
 
-Widget local de escritorio hecho con Tauri para visualizar contribuciones de GitHub, cambiar tema, ajustar tamano del widget y guardar la sesion local del usuario.
+Desktop widget built with Tauri to visualize GitHub contributions, switch themes, resize the widget, and keep the local user session.
 
 ## Preview
 <p align="center">
@@ -8,19 +8,23 @@ Widget local de escritorio hecho con Tauri para visualizar contribuciones de Git
   <img src="img/vertical2.png" width="25%">
 </p>
 
-## Caracteristicas
+## Download
 
-- Login local con `GitHub username` y `Personal access token`
-- Persistencia local con `localStorage`
-- Carga de perfil y contribuciones desde la API de GitHub
-- Avatar dinamico en el header
-- Logout desde el menu
-- Cambio de orientación: horizontal o vertical
-- Cambio de tema
-- Cambio de tamano del widget
-- Ventana tipo widget movible, minimizable y cerrable
+If you only want to use the app and do not need the source code, you can download the Windows installer or executable from the `Instalador/` folder in this repository.
 
-## Tecnologias
+## Features
+
+- Local login with `GitHub username` and `Personal Access Token`
+- Local persistence with `localStorage`
+- Profile and contributions loaded from the GitHub API
+- Dynamic avatar in the header
+- Logout from the widget menu
+- Horizontal and vertical layouts
+- Multiple visual themes
+- Adjustable widget size
+- Frameless, draggable, minimizable, and closable desktop window
+
+## Tech Stack
 
 - HTML
 - CSS
@@ -28,70 +32,92 @@ Widget local de escritorio hecho con Tauri para visualizar contribuciones de Git
 - Tauri
 - Rust
 
-## Configuración
-Para usar el widget se necesita:
-- Github username
-- Github personal access token
-Se puede generar el token aqui: https://github.com/settings/tokens
+## Requirements
 
-## Ejecutar en local
+To run the app locally you need:
 
-1. Instala dependencias:
+- Node.js
+- Rust
+- Cargo
+- Visual Studio Build Tools with `Desktop development with C++` on Windows
+
+You also need:
+
+- GitHub username
+- GitHub Personal Access Token
+
+You can create a token here:
+[https://github.com/settings/tokens](https://github.com/settings/tokens)
+
+## Run Locally
+
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Inicia la app:
+2. Start the app in development mode:
 
 ```bash
 npx tauri dev
 ```
 
-## Empaquetar para Windows
+## Build for Windows
 
-1. Instala dependencias:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Genera el instalador para Windows:
+2. Generate the production build:
 
 ```bash
 npx tauri build
 ```
 
-Los archivos generados quedaran dentro de `src-tauri/target/release/bundle/`.
+The generated installer will be available in `src-tauri/target/release/bundle/`.
 
-## Como funciona el login
+## How Login Works
 
-La app guarda estos datos en `localStorage` del entorno local de Tauri:
+The app stores these values in local Tauri `localStorage`:
 
 - `github_user`
 - `github_token`
 - `theme`
 - `widget_size`
+- `widget_layout`
 
-Cuando la app vuelve a abrirse, reutiliza `github_user` y `github_token` para conectarse automaticamente.
+When the app opens again, it reuses `github_user` and `github_token` to reconnect automatically.
 
-## Estructura principal
+## Project Structure
 
-- `index.html`: estructura del widget
-- `script.js`: logica del widget, login, menu y carga desde GitHub
-- `src-tauri/`: capa nativa y configuracion de Tauri
-- `css/`: estilos del widget y temas
-- `img/`: imagenes del widget
-- `assets/icono.ico`: icono de la app
+- `index.html`: widget structure
+- `script.js`: widget logic, login flow, menu actions, and GitHub requests
+- `css/`: widget styles and themes
+- `img/`: images used by the widget
+- `scripts/prepare-tauri-assets.mjs`: prepares static frontend assets for Tauri build
+- `src-tauri/`: native Tauri layer and app configuration
+- `assets/icono.ico`: app icon source
+
+## Tauri Notes
+
+- The current frontend is plain HTML, CSS, and JavaScript without a framework.
+- Tauri uses `index.html` as the entry point.
+- The window is configured as frameless and transparent to preserve the widget look.
+- Window controls and drag behavior are implemented through Tauri integration without rewriting the frontend.
 
 ## Themes
-El widget soporta multiples temas, algunos de ellos son:
- - Github
- - Cream
- - Lavander
- - Matcha
 
- Más temas pueden ser añadidos facilmente en `styles_themes.css`.
+The widget supports multiple themes, including:
+
+- Github
+- Cream
+- Lavander
+- Matcha
+
+More themes can be added easily in `css/styles_themes.css`.
 
 <p align="center">
   <img src="img/theme1.png" width="45%">
