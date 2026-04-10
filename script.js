@@ -420,6 +420,13 @@ function clearCredentials() {
   localStorage.removeItem(STORAGE_KEYS.token);
 }
 
+function createGitHubError(message, options = {}) {
+  const error = new Error(message);
+  error.code = options.code ?? "GITHUB_REQUEST_FAILED";
+  error.shouldClearCredentials = Boolean(options.shouldClearCredentials);
+  return error;
+}
+
 function setConnectionState({ connected, login, avatarUrl, message }) {
   profileName.textContent = login || DEFAULT_PROFILE.login;
   connectionStatus.textContent = message;
@@ -447,7 +454,10 @@ async function fetchGitHubProfile(username, token) {
   });
 
   if (!response.ok) {
-    throw new Error("No se pudo validar el usuario o el token en GitHub.");
+    throw createGitHubError("No se pudo validar el usuario o el token en GitHub.", {
+      code: "GITHUB_AUTH_FAILED",
+      shouldClearCredentials: response.status === 401 || response.status === 403 || response.status === 404
+    });
   }
 
   const data = await response.json();
@@ -478,30 +488,51 @@ async function fetchGitHubContributions(username, token) {
     }
   `;
 
-  const response = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query,
-      variables: {
-        login: username,
-        from: fromDate.toISOString(),
-        to: today.toISOString()
-      }
-    })
-  });
+  let response;
+
+  try {
+    response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        query,
+        variables: {
+          login: username,
+          from: fromDate.toISOString(),
+          to: today.toISOString()
+        }
+      })
+    });
+  } catch {
+    throw createGitHubError("No se pudo conectar con GitHub. Intenta de nuevo cuando tengas internet.", {
+      code: "GITHUB_NETWORK_FAILED",
+      shouldClearCredentials: false
+    });
+  }
 
   if (!response.ok) {
-    throw new Error("No se pudieron cargar las contribuciones desde GitHub.");
+    throw createGitHubError("No se pudieron cargar las contribuciones desde GitHub.", {
+      code: "GITHUB_CONTRIBUTIONS_FAILED",
+      shouldClearCredentials: response.status === 401 || response.status === 403
+    });
   }
 
   const result = await response.json();
 
   if (result.errors?.length) {
-    throw new Error(result.errors[0].message || "GitHub devolvio un error al consultar contribuciones.");
+    const firstErrorMessage = result.errors[0].message || "GitHub devolvio un error al consultar contribuciones.";
+    const shouldClearCredentials = result.errors.some((error) => {
+      const message = String(error.message || "").toLowerCase();
+      return message.includes("bad credentials") || message.includes("requires authentication") || message.includes("resource not accessible");
+    });
+
+    throw createGitHubError(firstErrorMessage, {
+      code: "GITHUB_GRAPHQL_FAILED",
+      shouldClearCredentials
+    });
   }
 
   return (
@@ -594,12 +625,15 @@ async function refreshWidget(options = {}) {
     renderMonths(contributions);
     renderGrid(contributions);
   } catch (error) {
-    clearCredentials();
+    if (error?.shouldClearCredentials) {
+      clearCredentials();
+    }
+
     setConnectionState({
       connected: false,
       login: DEFAULT_PROFILE.login,
       avatarUrl: DEFAULT_PROFILE.avatarUrl,
-      message: "Not connected"
+      message: error?.shouldClearCredentials ? "Not connected" : "Connection error"
     });
     renderEmptyState();
 

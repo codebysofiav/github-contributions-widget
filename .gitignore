@@ -9,3 +9,4 @@ src-tauri/target/
 *.log
 Thumbs.db
 Desktop.ini
+scripts-legacy/
