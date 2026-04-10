@@ -1,5 +1,6 @@
 .env
 node_modules/
+scripts-legacy/
 dist/
 build/
 out/
@@ -9,4 +10,3 @@ src-tauri/target/
 *.log
 Thumbs.db
 Desktop.ini
-scripts-legacy/
