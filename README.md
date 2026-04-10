@@ -108,6 +108,15 @@ When the app opens again, it reuses `github_user` and `github_token` to reconnec
 - The window is configured as frameless and transparent to preserve the widget look.
 - Window controls and drag behavior are implemented through Tauri integration without rewriting the frontend.
 
+## Future Improvements
+
+- Add support for automatic updates
+- Store credentials more securely using a native keychain instead of only `localStorage`
+- Add more widget customization options
+- Improve installer distribution through GitHub Releases
+- Add support for macOS and Linux builds with Tauri
+- Improve loading, error, and empty states with clearer user feedback
+
 ## Themes
 
 The widget supports multiple themes, including:
